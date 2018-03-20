@@ -12,9 +12,9 @@ all.titles<-c()
 all.points<-c()
 
 #1~40 페이지 영화 목록 수집
-for(page in 1:40)
-{
-  url<-paste(url_base,page,sep='') #url_base 에 페이지 번호를 붙인다. (1~40까지)
+#for(page in 1:40)
+#{
+  url<-paste(url_base,1,sep='') #url_base 에 페이지 번호를 붙인다. (1~40까지)
   txt<-readLines(url,encoding = 'euc-kr') #url에 해당하는 웹을 읽고 인코딩 euc-kr로
   
   #tit5클래스 아래 1줄 아래에는 영화 고유코드와 제목이 있다.

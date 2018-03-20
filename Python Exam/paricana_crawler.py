@@ -32,13 +32,11 @@ def getPelicanaAddress(result):
         soupData=BeautifulSoup(rcv_data,'html.parser')
 
         store_table=soupData.find('table',attrs={'class':'table mt20'})
-        print(store_table)
         tbody=store_table.find('tbody')
         bEnd=True
         for store_tr in tbody.findAll('tr'):
             bEnd=False
             tr_tag=list(store_tr.strings)
-            #print(tr_tag)
             store_name=tr_tag[1]
             store_address=tr_tag[3]
             store_sido_gu=store_address.split()[:2]
@@ -46,7 +44,6 @@ def getPelicanaAddress(result):
             result.append([store_name]+store_sido_gu+[store_address])
         if(bEnd==True):
             return
-        #print(tr_tag)
     return
 def main():
     result=[]
