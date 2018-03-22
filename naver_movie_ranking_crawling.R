@@ -1,4 +1,4 @@
-install.packages('XML')
+#install.packages('XML')
 library(XML)
 library(stringr)
 #네이버 영화 랭킹 목록
@@ -37,7 +37,7 @@ all.points<-c()
   all.titles<-c(all.titles,titles)
   #영화 평점 저장
   all.points<-c(all.points,points)
-}
+#}
 
 x<-cbind(all.codes,all.titles,all.points)
 head(x)

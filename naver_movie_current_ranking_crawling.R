@@ -13,6 +13,19 @@ all.codes<-c()
 all.titles<-c()
 #영화 평점 목록
 all.points<-c()
+#영화 장르
+all.genres<-c()
+#영화 상영시간
+all.times<-c()
+#개봉일
+all.releases<-c()
+#주연
+all.actors<-c()
+#감독
+all.directors<-C()
+#시청등급
+all.grades<-c()
+
 
 #1~40 페이지 영화 목록 수집
 #for(page in 1:40)

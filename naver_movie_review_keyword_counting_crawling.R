@@ -25,8 +25,8 @@ target_file<-target_file%>%
 success_cnt<-0  #웹 크로링을 많은 시간동안 하다보니 중간에 크롤링을 끊어도 그 전까지 정보를 저장하고자한 체크변수
 start_moive<-1
 ##크롤링 시작 // 영화별로 리뷰건수와 리뷰내용을 크롤링한다.
-#for(i in start_moive:5)
-#{01
+for(i in start_moive:length(target_file$code))
+{
 #  movie_code<-target_file$code[i]
   movie_code<-target_file$code[1]
   #네이버에서 관리하는 영화 고유 코드 값
@@ -86,13 +86,13 @@ start_moive<-1
   all.keyword_cnt<-c(all.keyword_cnt,keyword_cnt)
   #all.keyword_cnt
   success_cnt<-success_cnt+1
-#}
+}
   
 
 #x<-target_file[start_moive:start_moive+success_cnt,]
 x<-target_file
-#x
-x<-cbind(x,head(all.review_cnt,n=success_cnt))
+x
+x<-cbind(x,head(all.review_cnt))
 x<-cbind(x,head(all.keyword_cnt,n=success_cnt))
 
 colnames(x)<-c('code','movie_title','point','review_cnt','keyword_cnt')
