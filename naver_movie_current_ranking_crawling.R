@@ -65,11 +65,11 @@ for(i in 1:length(subset(data,select=code)))
   movie_code<-subset(data,select=code)
   url_code<-'https://movie.naver.com/movie/bi/mi/basic.nhn?code='
   url_code<-paste(url_code,movie_code[i],sep='')
+  #url_code<-paste(url_code,movie_code[4],sep='')
   #웹 크롤링
-  txt<-readLines(url_code,encoding = 'UTF-8')
-  txt
+  #txt<-readLines(url_code,encoding = 'UTF-8')
+  #txt
   
-  #url_code<-paste(url_code,movie_code[1],sep='')
   #url_code
   #웹 크롤링
   txt<-readLines(url_code,encoding = 'UTF-8')
@@ -84,7 +84,19 @@ for(i in 1:length(subset(data,select=code)))
   all.Genres<-c(all.Genres,movie_genre)
   #상영시간
   movie_info2<-txt[which(str_detect(txt,'N=a:ifo.nation'))+5]
-  all.tTmes<-c(all.Times,movie_info2)
+  movie_info2<-gsub('\\D','',movie_info2)
+ # ifelse(length(movie_info2)==1,all.Times<-c(all.Times,movie_info2[1]),
+  #       ifelse(length(movie_info2)==2,all.Times<-c(all.Times,movie_info2[2])),
+ #        ifelse(length(movie_info2)==3,all.Times<-c(all.Times,movie_info2[3]),all.Times<-c(all.Times,movie_info2[4])))
+  if(length(movie_info2)==1){
+    all.Times<-c(all.Times,movie_info2[1])
+  }else if(length(movie_info2)==2){
+    all.Times<-c(all.Times,movie_info2[2])
+  }else if(length(movie_info2)==3){
+    all.Times<-c(all.Times,movie_info2[3])
+  }else{
+    all.Times<-c(all.Times,movie_info2[4])
+  }
   #출시일
   movie_info2<-txt[which(str_detect(txt,'N=a:ifo.day'))]
   movie_info2<-gsub('\\D','',movie_info2)
@@ -113,4 +125,5 @@ for(i in 1:length(subset(data,select=code)))
  
 data<-cbind(data,all.Genres,all.Times,all.Releases,all.Directors,all.Actors,all.Grades)
   head(data)
+  colnames(data)<-c('code','movie_title','point','Genres','Times','Releases','Directors','Actors','Grades')
 write.csv(data,'C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_list02.csv')
