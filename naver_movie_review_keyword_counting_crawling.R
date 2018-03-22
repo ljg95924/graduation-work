@@ -92,7 +92,7 @@ for(i in start_moive:length(target_file$code))
 #x<-target_file[start_moive:start_moive+success_cnt,]
 x<-target_file
 x
-x<-cbind(x,head(all.review_cnt))
+x<-cbind(x,head(all.review_cnt,n=success_cnt))
 x<-cbind(x,head(all.keyword_cnt,n=success_cnt))
 
 colnames(x)<-c('code','movie_title','point','review_cnt','keyword_cnt')

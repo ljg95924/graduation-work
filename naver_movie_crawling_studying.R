@@ -78,7 +78,7 @@ if(review_cnt>10 | length(review_cnt)>1)
 all.reviews<-c() #영화 리뷰
 
 ##영화 리뷰 내용 크롤링
-for(page in 1:total_page)
+#for(page in 1:total_page)
 #for(page in 1:5)  
 {
   url_sub<-paste(url_base,movie_code,sep='')
