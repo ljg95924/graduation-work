@@ -13,20 +13,6 @@ all.review_cnt<-c()
 #영화 리뷰 중 특정 키워드가 인용된 건수
 all.keyword_cnt<-c()
 
-#영화 장르
-all.genres<-c()
-#영화 상영시간
-all.times<-c()
-#개봉일
-all.releases<-c()
-#주연
-all.actors<-c()
-#감독
-all.directors<-C()
-#시청등급
-all.grades<-c()
-
-
 #특정 키워드 지정
 keyword<-'감동'
 
@@ -46,6 +32,7 @@ start_moive<-1
 for(i in start_moive:length(target_file$code))
 {
 movie_code<-target_file$code[i]
+#movie_code<-target_file$code[1]
 #네이버에서 관리하는 영화 고유 코드 값
 url_main<-paste(url_base,movie_code,sep='')
 url_main<-paste(url_main,url_paging,sep='')
@@ -76,9 +63,10 @@ if(review_cnt>10 | length(review_cnt)>1)
   total_page<-1
 }
 all.reviews<-c() #영화 리뷰
+all.points<-c()#영화 평점
 
 ##영화 리뷰 내용 크롤링
-#for(page in 1:total_page)
+for(page in 1:total_page)
 #for(page in 1:5)  
 {
   url_sub<-paste(url_base,movie_code,sep='')
@@ -95,8 +83,14 @@ all.reviews<-c() #영화 리뷰
   
   all.reviews<-c(all.reviews,reviews) #리뷰 목록 저장
   
+  points<-review_txt[which(str_detect(review_txt,'class=\"st_on\"'))]
+  #points
+  
+  points<-gsub('<.+?>|\t','',points)
+  all.points<-c(all.points,points)
+  
+  
 }
-
 #review_txt
 #reviews
 #all.reviews
@@ -106,10 +100,10 @@ all.reviews<-c() #영화 리뷰
 #keyword_cnt<-length(keyword_cnt)
 #all.keyword_cnt<-c(all.keyword_cnt,keyword_cnt)
 #all.keyword_cnt
-info<-cbind((all.reviews))
+info<-cbind((all.reviews),(all.points))
 #print(info)
-colnames(info)<-c('reviews')
-defalut_address1<-'C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_review_list\\'
+colnames(info)<-c('reviews','points')
+defalut_address1<-'C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_reviews_list\\'
 defalut_address2<-'.csv'
 address<-paste(defalut_address1,movie_code,defalut_address2,sep='')
 write.csv(info,address)
