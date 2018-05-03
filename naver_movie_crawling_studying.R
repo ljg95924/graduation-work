@@ -1,5 +1,9 @@
 rm(list=ls())# 변수 다삭제 
-
+#install.packages("DBI")
+#install.packages("RMySQL", type = "source")
+#install.packages("RJDBC") # JDBC()함수 제공 
+#install.packages('RMySQL')
+#Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_161')
 library(XML)
 library(stringr)
 library(dplyr)
@@ -29,9 +33,9 @@ start_moive<-1
 #x<-target_file
 
 ##크롤링 시작 // 영화별로 리뷰건수와 리뷰내용을 크롤링한다.
-for(i in start_moive:length(target_file$code))
+#for(i in start_moive:length(target_file$code))
 {
-movie_code<-target_file$code[i]
+movie_code<-target_file$code[1]
 #movie_code<-target_file$code[1]
 #네이버에서 관리하는 영화 고유 코드 값
 url_main<-paste(url_base,movie_code,sep='')
@@ -80,7 +84,7 @@ for(page in 1:total_page)
   #reviews<-c(str_match(reviews,keyword)) #특정 키워드 포함된 리뷰만 저장 아니면 NA로 
   
   reviews<-gsub('<.+?>|\t','',reviews) 
-  
+  reviews<-
   all.reviews<-c(all.reviews,reviews) #리뷰 목록 저장
   
   points<-review_txt[which(str_detect(review_txt,'class=\"st_on\"'))]
@@ -103,10 +107,16 @@ for(page in 1:total_page)
 info<-cbind((all.reviews),(all.points))
 #print(info)
 colnames(info)<-c('reviews','points')
-defalut_address1<-'C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_reviews_list\\'
+info
+defalut_address1<-'C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_review_list\\'
+#defalut_address1<-'C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_reviews_list\\'
+#defalut_address2<-'.txt'
 defalut_address2<-'.csv'
 address<-paste(defalut_address1,movie_code,defalut_address2,sep='')
-write.csv(info,address)
+
+#write.table(info,address)
+#write.csv(info,address)
+write.csv(info,address,fileEncoding = 'CP949')
 success_cnt<-success_cnt+1
 }
 
