@@ -1,10 +1,13 @@
+###
+#네이버 영화 상세정보 크롤링
+
 #install.packages('XML')
 rm(list=ls())# 변수 다삭제 
 library(XML)
 library(stringr)
 #library(KoNLP)
 #네이버 영화 랭킹 목록
-url_base<-'http://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=cur&date=20180318'
+url_base<-'http://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=cur&date=20180318&page='
 #date<-scan()
 
 #영화 코드 목록
@@ -28,10 +31,10 @@ all.Directors<-c()
 all.Grades<-c()
 
 #1~40 페이지 영화 목록 수집
-#for(page in 1:40)
-#{
-  #url<-paste(url_base,date,sep='') #url_base 에 페이지 번호를 붙인다. (1~40까지)
-  url<-url_base
+for(page in 1:40)
+{
+  url<-paste(url_base,page,sep='') #url_base 에 페이지 번호를 붙인다. (1~40까지)
+  #url<-url_base
   txt<-readLines(url,encoding = 'euc-kr') #url에 해당하는 웹을 읽고 인코딩 euc-kr로
   #tit5클래스 아래 1줄 아래에는 영화 고유코드와 제목이 있다.
   movie_info<-txt[which(str_detect(txt,'class=\"tit5\"'))+1] #읽어온 정보 txt 에서 class='tit5'라는 문자열이 존재하는 곳을 찾아서 한 줄 아래 있는 정보를 moive_info 에
@@ -53,7 +56,7 @@ all.Grades<-c()
   all.titles<-c(all.titles,titles)
   #영화 평점 저장
   all.points<-c(all.points,points)
-#}
+}
 
   data<-cbind(all.codes,all.titles,all.points)
   head(data)
@@ -71,7 +74,7 @@ for(i in 1:length(subset(data,select=code)))
   #txt
   
   #url_code
-  #웹 크롤링
+  ###웹 크롤링
   txt<-readLines(url_code,encoding = 'UTF-8')
   #장르
   movie_info2<-txt[which(str_detect(txt,'N=a:ifo.genre'))]
@@ -120,6 +123,11 @@ for(i in 1:length(subset(data,select=code)))
     movie_grade<-paste(movie_grade,movie_info2[i])
   }
   all.Grades<-c(all.Grades,movie_grade)
+  
+  ###이미지
+  install.packages('RCurl')
+  library(RCurl)
+  library(XML)
   
 }
  

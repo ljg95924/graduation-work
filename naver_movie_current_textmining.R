@@ -1,4 +1,7 @@
+###
+#영화 키워드 추출
 rm(list=ls())# 변수 다삭제
+options(mc.cores=1) # 단일 Core 만 활용하도록 변경 (옵션), 윈도에서는 멀티코어 사용시 Java와 충돌하므로 코어 수를 1로 고정
 Sys.setlocale("LC_COLLATE", "ko_KR.UTF-8");
 #install.packages('KoNLP')
 #install.packages('rJava')
@@ -12,32 +15,41 @@ library(dplyr)
 library(KoNLP)
 #library()
 #영화 목록파일을 직접 선택
-csv_file<-read.csv("C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_list02.csv",header = T,sep=',',stringsAsFactors = F)
+csv_file<-read.csv("C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_list02.csv",header = T,sep=',',stringsAsFactors =  F)
 csv_file<-csv_file%>%
   select(-X)
 movie_codes<-c()
 movie_data2<-c()
 
 
+#defalut_address1<-'C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_reviews_list\\'
 defalut_address1<-'C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_review_list\\'
 defalut_address2<-'.csv'
+
+
+
 write_address1<-'C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_keyword_list\\'
 write_address2<-'.csv'
 
-useSejongDic()
-buildDictionary(ext_dic='sejong',user_dic = data.frame(readLines("addNoun.txt"), "ncn"))
+#useSejongDic()
+#buildDictionary(ext_dic='sejong',user_dic = data.frame(readLines("addNoun.txt"), "ncn"))
 
 for(i in 1:length(csv_file$code)){
   movie_codes<-c(movie_codes,csv_file$code[i])
 }
+
 #movie_codes
 #length(movie_codes)
-#for(j in 1:length(movie_codes)){
+for(j in 1:length(movie_codes)){
+useSejongDic()
+buildDictionary(ext_dic='sejong',user_dic = data.frame(readLines("addNoun.txt"), "ncn"))
+
 address=NULL
-#address<-paste(defalut_address1,movie_codes[j],defalut_address2,sep='')
-address<-paste(defalut_address1,151196,defalut_address2,sep='')
-#address
-Encoding(movie_data2)<-"UTF-8"
+address<-paste(defalut_address1,movie_codes[j],defalut_address2,sep='') #for문
+
+#address<-paste(defalut_address1,151196,defalut_address2,sep='') #test용
+
+#Encoding(movie_data2)<-"UTF-8"
 movie_data2<-read.csv(address,header = T,stringsAsFactors = F)
 #movie_data2<-read.table(address,header=F,sep="",stringsAsFactors = F)
 
@@ -55,7 +67,9 @@ top150<-df_word%>%
   arrange(desc(Freq))%>%
   head(150)
 top150
-
+addre<-paste(write_address1,movie_codes[j],write_address2,sep='')
+write.csv(top150,addre)
+}
 ###---- wordcloud
 library(wordcloud)
 library(RColorBrewer)

@@ -1,3 +1,5 @@
+###
+#영화 리뷰 크로링
 rm(list=ls())# 변수 다삭제 
 #install.packages("DBI")
 #install.packages("RMySQL", type = "source")
@@ -33,10 +35,10 @@ start_moive<-1
 #x<-target_file
 
 ##크롤링 시작 // 영화별로 리뷰건수와 리뷰내용을 크롤링한다.
-#for(i in start_moive:length(target_file$code))
+for(i in start_moive:length(target_file$code))
 {
-movie_code<-target_file$code[1]
 #movie_code<-target_file$code[1]
+movie_code<-target_file$code[i]
 #네이버에서 관리하는 영화 고유 코드 값
 url_main<-paste(url_base,movie_code,sep='')
 url_main<-paste(url_main,url_paging,sep='')
@@ -93,7 +95,8 @@ for(page in 1:total_page)
   points<-gsub('<.+?>|\t','',points)
   all.points<-c(all.points,points)
   
-  
+  if(page==200)
+    break
 }
 #review_txt
 #reviews
