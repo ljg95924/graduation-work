@@ -66,7 +66,7 @@ tdm<-TermDocumentMatrix(cps,
 
 Encoding(tdm$dimnames$Terms)='UTF-8'
 findFreqTerms(tdm,lowfreq = 10)
-#최종결과 확인
+s#최종결과 확인
 dim(tdm)
 
 tdm_matrix <- as.matrix(tdm)

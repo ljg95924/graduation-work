@@ -94,7 +94,7 @@ ggplot(data=top40,aes(x=reorder(Var1,-Freq),y=Freq))+geom_col()+theme(axis.text.
 Encoding(top40[1,1])
 library(RMySQL)
 library(rJava)
-library(RJDBC) # rJava에 의존적이다.
+library(RJDBC) # rJazva에 의존적이다.
 drv <- JDBC(driverClass="com.mysql.jdbc.Driver", 
             classPath="C:\\mysql-connector-java-5.1.46-bin.jar")
 con <- dbConnect(MySQL(), host = "127.0.0.1", dbname = "test",
