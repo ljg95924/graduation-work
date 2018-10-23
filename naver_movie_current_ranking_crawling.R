@@ -8,6 +8,7 @@ library(stringr)
 #library(KoNLP)
 #네이버 영화 랭킹 목록
 url_base<-'http://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=cur&date=20180318&page='
+url_base<-'http://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=cur&date=20181023&page='
 #date<-scan()
 
 #영화 코드 목록
@@ -33,6 +34,7 @@ all.Grades<-c()
 #1~40 페이지 영화 목록 수집
 for(page in 1:40)
 {
+  #page=1
   url<-paste(url_base,page,sep='') #url_base 에 페이지 번호를 붙인다. (1~40까지)
   #url<-url_base
   txt<-readLines(url,encoding = 'euc-kr') #url에 해당하는 웹을 읽고 인코딩 euc-kr로
@@ -125,7 +127,7 @@ for(i in 1:length(subset(data,select=code)))
   all.Grades<-c(all.Grades,movie_grade)
   
   ###이미지
-  install.packages('RCurl')
+  #install.packages('RCurl')
   library(RCurl)
   library(XML)
   
@@ -135,3 +137,4 @@ data<-cbind(data,all.Genres,all.Times,all.Releases,all.Directors,all.Actors,all.
   head(data)
   colnames(data)<-c('code','movie_title','point','Genres','Times','Releases','Directors','Actors','Grades')
 write.csv(data,'C:\\Users\\CS3-10\\Documents\\GitHub\\graduation-work\\movie_list02.csv')
+write.csv(data,'C:\\Users\\ljg\\Documents\\GitHub\\graduation-work\\movie_list1023.csv')

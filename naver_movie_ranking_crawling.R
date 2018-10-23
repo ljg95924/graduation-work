@@ -2,7 +2,7 @@
 library(XML)
 library(stringr)
 #네이버 영화 랭킹 목록
-url_base<-'http://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=pnt&date=20180315&page='
+url_base<-'http://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=pnt&date=20181022&page='
 
 #영화 코드 목록
 all.codes<-c()
@@ -12,8 +12,8 @@ all.titles<-c()
 all.points<-c()
 
 #1~40 페이지 영화 목록 수집
-#for(page in 1:40)
-#{
+for(page in 1:40)
+{
   url<-paste(url_base,1,sep='') #url_base 에 페이지 번호를 붙인다. (1~40까지)
   txt<-readLines(url,encoding = 'euc-kr') #url에 해당하는 웹을 읽고 인코딩 euc-kr로
   
@@ -37,9 +37,10 @@ all.points<-c()
   all.titles<-c(all.titles,titles)
   #영화 평점 저장
   all.points<-c(all.points,points)
-#}
+}
 
 x<-cbind(all.codes,all.titles,all.points)
 head(x)
 colnames(x)<-c('code','movie_title','point')
 write.csv(x,'C:\\Users\\CS3-10\\Documents\\GitHub\\R-study\\movie_list.csv')
+write.csv(x,'C:\\Users\\ljg\\Documents\\GitHub\\graduation-work\\movie_list.csv')
